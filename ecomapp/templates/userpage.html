@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+        }
+        .header h1 {
+            margin-bottom: 10px;
+        }
+        .logout {
+            text-align: right;
+        }
+        .logout a {
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #333;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+          {% csrf_token %}
+            <h1>Welcome, {{ u }}!</h1>
+            <p>This is your user page.</p>
+        </div>
+        <p>Here you can manage your account, view your details, and much more.</p>
+    </div>
+<div>
+     <div class="container">
+         <h1>Our Products</h1>
+         <form method="post">
+             {% csrf_token %}
+             <ul class="product-list">
+                 {% for product in products %}
+                 <li class="product-item">
+                     <input type="checkbox" id="product{{ product.id }}" name="products" value="{{ product.id }}">
+                     <label for="product{{ product.id }}"> {{ product.productname }} - ${{ product.price }}</label>
+                 </li>
+                 {% endfor %}
+             </ul>
+             <div class="submit">
+                 <button type="submit">Submit</button>
+             </div>
+         </form>
+         {% if selected_products %}
+         <h2>Selected Products:</h2>
+         <ul> {% for product_id in selected_products %}
+             <li>{{ product_id }}</li>
+             {% endfor %}
+         </ul>
+         {% endif %}
+        </ul>
+
+</div>
+</body>
+</html>
